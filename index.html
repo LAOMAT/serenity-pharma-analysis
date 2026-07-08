@@ -160,7 +160,7 @@ h2::after {
   position: absolute;
   left: 28px; bottom: -1px;
   width: 40px; height: 2px;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
   border-radius: 2px;
 }
 h3 {
@@ -168,20 +168,27 @@ h3 {
   margin: 32px 0 14px;
   line-height: 1.4;
   position: relative;
-  padding-left: 14px;
+  padding: 10px 14px;
+  background: rgba(201,162,74,0.05);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
 }
-h3::before {
-  content: '';
-  position: absolute; left: 0; top: 0.4em;
-  width: 3px; height: 1em;
-  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-light) 100%);
-  border-radius: 2px;
-}
+h3::before { display: none; }
 h4 {
   font-size: 0.95rem; font-weight: 600;
-  color: var(--accent2);
+  color: var(--accent-light);
   margin: 22px 0 10px;
   line-height: 1.5;
+  position: relative;
+  padding-left: 12px;
+}
+h4::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 4px; height: 4px;
+  background: var(--accent-light);
+  border-radius: 50%;
 }
 p {
   margin-bottom: 16px;
@@ -214,8 +221,10 @@ li strong { color: var(--ink); }
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--accent);
-  padding-left: 0;
-  font-weight: 600;
+  padding: 0;
+  background: none;
+  border-left: none;
+  border-radius: 0;
 }
 .toc h3::before { display: none; }
 .toc ol { list-style: none; counter-reset: toc; padding: 0; margin: 0; }
@@ -280,7 +289,10 @@ li strong { color: var(--ink); }
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--accent);
-  padding-left: 0;
+  padding: 0;
+  background: none;
+  border-left: none;
+  border-radius: 0;
   font-weight: 600;
 }
 .exec-summary h3::before { display: none; }
@@ -346,7 +358,9 @@ li strong { color: var(--ink); }
   color: var(--muted);
   font-weight: 500;
   letter-spacing: 0.02em;
+  padding: 0;
 }
+.card h4::before { display: none; }
 .card .val {
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.5rem;
@@ -383,7 +397,9 @@ li strong { color: var(--ink); }
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
+  padding: 0;
 }
+.data-block h4::before { display: none; }
 .data-block .data-row {
   display: flex;
   flex-wrap: wrap;
@@ -459,6 +475,159 @@ tbody tr:hover { background: rgba(201,162,74,0.04); }
   color: var(--ink);
 }
 
+/* ===== Three Column Grid (入门三段式) ===== */
+.three-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+.col-card {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 20px 18px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.col-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.col-card.upstream { border-top: 3px solid var(--green); }
+.col-card.midstream { border-top: 3px solid var(--accent); }
+.col-card.downstream { border-top: 3px solid var(--accent2); }
+.col-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+.col-card h4 {
+  font-size: 0.95rem;
+  margin: 0 0 6px;
+  padding: 0;
+  border: none;
+}
+.col-card h4::before { display: none; }
+.col-tag {
+  font-size: 0.7rem;
+  color: var(--accent-light);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.col-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+}
+.col-list li {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  padding: 4px 0;
+  line-height: 1.5;
+  border-bottom: 1px dashed var(--rule);
+}
+.col-list li:last-child { border-bottom: none; }
+.col-list strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.col-logic, .col-risk, .col-company {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  margin: 6px 0;
+  line-height: 1.5;
+}
+.col-logic strong, .col-risk strong, .col-company strong {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===== Pitfall Grid (避坑指南) ===== */
+.pitfall-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 24px 0;
+}
+.pitfall-card {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 18px 18px 16px 60px;
+  position: relative;
+}
+.pitfall-num {
+  position: absolute;
+  left: 16px;
+  top: 18px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--danger);
+  font-family: 'JetBrains Mono', monospace;
+  opacity: 0.8;
+}
+.pitfall-card h4 {
+  font-size: 0.88rem;
+  margin: 0 0 6px;
+  padding: 0;
+  border: none;
+  color: var(--ink);
+}
+.pitfall-card h4::before { display: none; }
+.pitfall-card p {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.6;
+}
+.pitfall-card strong {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* ===== Rule List (选股标准) ===== */
+.rule-list {
+  margin: 24px 0;
+  counter-reset: rule-counter;
+}
+.rule-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.rule-item:last-child { border-bottom: none; }
+.rule-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  font-family: 'JetBrains Mono', monospace;
+}
+.rule-content h4 {
+  font-size: 0.9rem;
+  margin: 0 0 4px;
+  padding: 0;
+  border: none;
+  color: var(--ink);
+}
+.rule-content h4::before { display: none; }
+.rule-content p {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.6;
+}
+
 /* ===== Figures ===== */
 .chart-figure {
   margin: 32px 0;
@@ -503,12 +672,102 @@ mark.key {
   margin: 0 0 8px;
   font-size: 0.9rem;
   font-weight: 600;
+  padding: 0;
 }
+.quadrant h4::before { display: none; }
 .quadrant p {
   font-size: 0.82rem;
   color: var(--ink-soft);
   margin: 0;
   line-height: 1.6;
+}
+
+/* ===== Layer chain (7-layer architecture) ===== */
+.layer-chain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 8px 0;
+}
+.layer-item {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg3);
+  border: 1.5px solid var(--rule);
+  border-radius: 10px;
+  padding: 14px 18px;
+  position: relative;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.layer-item:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.layer-item.layer-gold { border-color: rgba(201,162,74,0.5); }
+.layer-item.layer-blue { border-color: rgba(106,157,255,0.5); }
+.layer-item.layer-red { border-color: rgba(229,106,124,0.5); }
+.layer-item.layer-green { border-color: rgba(93,196,154,0.5); }
+.layer-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.layer-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.layer-item.layer-blue .layer-num { color: var(--accent2); }
+.layer-item.layer-red .layer-num { color: var(--danger); }
+.layer-item.layer-green .layer-num { color: var(--green); }
+.layer-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.layer-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.layer-comp {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+.layer-arrow {
+  color: var(--muted);
+  font-size: 0.9rem;
+  opacity: 0.5;
+  line-height: 1;
+  padding: 4px 0;
+}
+.layer-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  width: 100%;
+  max-width: 420px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.legend-item i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 /* ===== Signal bar ===== */
@@ -558,7 +817,10 @@ footer .sources h2 {
   font-size: 1rem;
   margin-bottom: 20px;
   padding-bottom: 8px;
+  display: block;
 }
+footer .sources h2::before { display: none; }
+footer .sources h2::after { display: none; }
 footer .sources ol {
   padding-left: 1.2rem;
   font-size: 0.82rem;
@@ -734,10 +996,11 @@ footer .sources a { word-break: break-all; color: var(--accent); }
   h2::after { left: 20px; width: 36px; height: 2px; }
   h3 {
     font-size: 1.05rem; margin: 26px 0 12px;
-    line-height: 1.4; padding-left: 14px; font-weight: 600;
+    line-height: 1.4; padding: 8px 12px; font-weight: 600;
   }
-  h3::before { width: 3px; top: 0.35em; height: 1em; }
-  h4 { font-size: 0.9rem; margin: 20px 0 10px; font-weight: 600; }
+  h3::before { display: none; }
+  h4 { font-size: 0.9rem; margin: 20px 0 10px; font-weight: 600; padding-left: 12px; }
+  h4::before { width: 4px; height: 4px; top: 0.55em; }
   p { margin-bottom: 14px; line-height: 1.85; font-size: 0.9rem; }
   ul, ol { margin: 8px 0 16px 20px; }
   li { margin-bottom: 7px; line-height: 1.7; font-size: 0.9rem; }
@@ -796,6 +1059,26 @@ footer .sources a { word-break: break-all; color: var(--accent); }
   .quadrant { padding: 14px 18px; }
   .quadrant h4 { font-size: 0.85rem; margin: 0 0 6px; font-weight: 600; }
   .quadrant p { font-size: 0.8rem; line-height: 1.6; }
+
+  /* Three column grid */
+  .three-col-grid { grid-template-columns: 1fr; gap: 12px; }
+  .col-card { padding: 16px 14px; }
+  .col-icon { font-size: 1.5rem; }
+  .col-card h4 { font-size: 0.88rem; }
+  .col-list li { font-size: 0.76rem; }
+
+  /* Pitfall grid */
+  .pitfall-grid { grid-template-columns: 1fr; gap: 10px; }
+  .pitfall-card { padding: 14px 14px 12px 50px; }
+  .pitfall-num { font-size: 1.2rem; left: 14px; top: 14px; }
+  .pitfall-card h4 { font-size: 0.82rem; }
+  .pitfall-card p { font-size: 0.76rem; }
+
+  /* Rule list */
+  .rule-item { gap: 12px; padding: 12px 0; }
+  .rule-num { width: 32px; height: 32px; font-size: 0.82rem; }
+  .rule-content h4 { font-size: 0.85rem; }
+  .rule-content p { font-size: 0.78rem; }
 
   /* Signal bar */
   .signal-bar .label { width: 70px; font-size: 0.78rem; }
@@ -965,6 +1248,7 @@ footer .sources a { word-break: break-all; color: var(--accent); }
   <div class="toc">
     <h3>目录</h3>
     <ol>
+      <li><a href="#ch0">入门必读：三分钟搞懂创新药产业链</a></li>
       <li><a href="#ch1">Serenity分析框架概述</a></li>
       <li><a href="#ch2">创新药产业链全景：七层架构</a></li>
       <li><a href="#ch3">政策拐点：三重利好共振，6月29日市场确认</a></li>
@@ -976,6 +1260,151 @@ footer .sources a { word-break: break-all; color: var(--accent); }
     </ol>
   </div>
 </nav>
+
+<!-- ===== CHAPTER 0: Beginner's Guide ===== -->
+<section id="ch0" data-ch="00">
+  <div class="container">
+    <h2>入门必读：三分钟搞懂创新药产业链</h2>
+    <a class="back-toc" href="#toc">↑ 回到目录</a>
+
+    <p>很多人买创新药概念股，最容易犯的错误是<strong>只看名字、不看环节；只听故事、不看基本面</strong>。创新药产业链分上中下游，每个环节的赚钱逻辑、风险等级、投资价值完全不同。本章用最通俗的语言帮你建立基础认知，避开90%的坑。</p>
+
+    <h3>0.1 三段式框架：上游稳、中游险、下游防御</h3>
+    <p>创新药产业链可以简单划分为三大环节，记住一句话：<mark class="key">上游卖铲子，中游挖金矿，下游收过路费</mark>。</p>
+
+    <div class="three-col-grid">
+      <div class="col-card upstream">
+        <div class="col-icon">🛠️</div>
+        <h4>上游：研发生产配套</h4>
+        <p class="col-tag">稳赚 · 低风险 · 首选</p>
+        <ul class="col-list">
+          <li><strong>CXO</strong>：CRO（研发外包）、CDMO（生产外包），给药企打工，收服务费</li>
+          <li><strong>核心原料</strong>：生物试剂、培养基、填料、实验动物</li>
+          <li><strong>设备耗材</strong>：制药装备、一次性反应袋、色谱柱</li>
+        </ul>
+        <p class="col-logic"><strong>赚钱逻辑</strong>：不管药企研发成功还是失败，上游都要先收钱。创新药行业越火，上游订单越多。</p>
+        <p class="col-risk"><strong>风险等级</strong>：★★☆☆☆（低）</p>
+        <p class="col-company"><strong>代表公司</strong>：药明康德、凯莱英、义翘神州、百普赛斯、奥浦迈、东富龙</p>
+      </div>
+
+      <div class="col-card midstream">
+        <div class="col-icon">💊</div>
+        <h4>中游：创新药企</h4>
+        <p class="col-tag">高风险高收益 · 慎买</p>
+        <ul class="col-list">
+          <li><strong>小分子</strong>：靶向药、口服药，成本低、研发快</li>
+          <li><strong>大分子</strong>：单抗、双抗、ADC（抗体偶联药），疗效好、价格高</li>
+          <li><strong>前沿疗法</strong>：细胞治疗、基因治疗，技术难度最大</li>
+        </ul>
+        <p class="col-logic"><strong>赚钱逻辑</strong>：新药成功上市，毛利率80%-95%，一款药一年卖几十亿；研发失败，投入全部打水漂。</p>
+        <p class="col-risk"><strong>风险等级</strong>：★★★★★（极高）</p>
+        <p class="col-company"><strong>代表公司</strong>：恒瑞医药、百济神州、信达生物、荣昌生物、科伦药业</p>
+      </div>
+
+      <div class="col-card downstream">
+        <div class="col-icon">🏥</div>
+        <h4>下游：流通与支付</h4>
+        <p class="col-tag">稳定 · 防御 · 避险</p>
+        <ul class="col-list">
+          <li><strong>医药流通</strong>：批发配送，赚5%-10%差价</li>
+          <li><strong>DTP药房</strong>：高价创新药零售，直接对接患者</li>
+          <li><strong>医疗服务</strong>：医院、CRO临床机构、检测中心</li>
+        </ul>
+        <p class="col-logic"><strong>赚钱逻辑</strong>：赚配送费/服务费，刚需稳定，现金流好，不管药涨不涨价都赚钱。</p>
+        <p class="col-risk"><strong>风险等级</strong>：★★☆☆☆（低）</p>
+        <p class="col-company"><strong>代表公司</strong>：上海医药、国药股份、益丰药房</p>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <p><strong>一句话结论</strong>：普通人买创新药板块，<mark class="key">优先选上游CXO和核心原料龙头</mark>（稳赚、波动小）；中游只买有上市产品、有业绩、能出海的大龙头（小公司慎碰）；下游适合保守型投资者防御配置。</p>
+    </div>
+
+    <h3>0.2 普通人最容易踩的5个坑</h3>
+    <p>90%的散户买创新药亏钱，都是因为踩了以下几个坑。提前避开，少亏就是赚。</p>
+
+    <div class="pitfall-grid">
+      <div class="pitfall-card">
+        <div class="pitfall-num">01</div>
+        <h4>把"蹭概念"当"真创新"</h4>
+        <p>很多公司名字带"药"、带"生物"、带"创新"，实则<strong>无核心技术、无上市产品、无业绩营收</strong>，全靠蹭热点炒股价。判断标准：至少1款新药获批上市、年营收>5亿、研发费用率>15%。</p>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-num">02</div>
+        <h4>专挑中游小药企，赌研发成功</h4>
+        <p>创新药研发成功率不到10%，一款药要烧10-15年、几十亿。临床I/II/III期随便失败一个，股价直接跌50%-90%。<strong>不要用买彩票的心态买创新药</strong>。</p>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-num">03</div>
+        <h4>只看获批利好，忽视医保砍价</h4>
+        <p>新药获批是利好，但进医保后价格可能被砍50%-90%，出现"卖得越多、赚得越少"的尴尬局面。<strong>获批≠赚钱</strong，一定要看医保谈判后的实际利润率。</p>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-num">04</div>
+        <h4>追高买入，高位接盘</h4>
+        <p>创新药波动极大，暴涨之后必有暴跌。看到股价涨了20%、30%就追进去，往往是主力出货、你接盘。<strong>永远等回调，不追高</strong>。</p>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-num">05</div>
+        <h4>买"烧钱续命"的公司</h4>
+        <p>有些创新药企常年亏损，靠融资续命，账上现金撑不过18个月。一旦融资环境收紧，资金链说断就断。<strong>账上现金≥18个月运营费用</strong>是底线。</p>
+      </div>
+    </div>
+
+    <h3>0.3 5条简单选股标准，新手也能用</h3>
+    <p>看完上面的坑，你可能会问：那到底怎么选？以下5条标准简单好记，新手也能直接套用。</p>
+
+    <div class="rule-list">
+      <div class="rule-item">
+        <div class="rule-num">1</div>
+        <div class="rule-content">
+          <h4>优先选上游，慎碰中游小药企</h4>
+          <p>首选上游CXO和核心原料龙头（稳赚、波动小），中游只买有产品、有业绩、国际化的大龙头。小药企一律不碰。</p>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-num">2</div>
+        <div class="rule-content">
+          <h4>中游药企三条件：有产品 + 有业绩 + 能出海</h4>
+          <p>如果非要买中游药企，必须同时满足：①至少1款新药上市销售；②营收稳定增长、现金流为正；③海外收入占比≥30%或有BD授权订单。三者缺一不可。</p>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-num">3</div>
+        <div class="rule-content">
+          <h4>避开"伪创新"五特征</h4>
+          <p>有以下任一特征的公司坚决避开：①无上市产品；②年营收<1亿；③研发费用率<15%；④管线全是PD-1/EGFR等内卷老靶点；⑤大股东频繁减持。</p>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-num">4</div>
+        <div class="rule-content">
+          <h4>看财务健康度：现金储备是生命线</h4>
+          <p>创新药企可以亏损，但不能永远亏。财务健康的底线：账上现金≥18个月运营费用、经营现金流稳步改善、资产负债率≤60%。</p>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-num">5</div>
+        <div class="rule-content">
+          <h4>不追高、回调买、分批建仓</h4>
+          <p>等板块回调、股价回踩支撑位再入场；单只股票仓位≤20%，总仓位≤50%；创新药是长赛道，持有1-3年，不做短线。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout accent">
+      <p><strong>本章小结</strong>创新药是好赛道，但90%的公司是蹭概念、是雷区。<mark class="key">上游稳赚、中游赌命、下游防御</mark>——记住这9个字，再结合5条选股标准，就能避开大部分坑。如果你已经理解了基础框架，可以继续阅读后续章节，了解Serenity框架如何从更深层的瓶颈理论和认知差视角，挖掘产业链中真正的"紫苏叶"标的。</p>
+    </div>
+  </div>
+</section>
 
 <!-- ===== CHAPTER 1: Framework Overview ===== -->
 <section id="ch1" data-ch="01">
@@ -1047,30 +1476,75 @@ footer .sources a { word-break: break-all; color: var(--accent); }
 
     <div class="chart-figure">
       <figcaption>创新药产业链七层架构与A股核心标的</figcaption>
-      <div class="mermaid">
-graph TD
-    L1["L1: 核心原料<br/>培养基·填料·生物试剂<br/>义翘神州/百普赛斯/奥浦迈"]
-    L2["L2: 实验动物<br/>模式动物·基因编辑<br/>南模生物/药康生物"]
-    L3["L3: 仪器设备<br/>生物反应器·分析仪器<br/>东富龙/楚天科技"]
-    L4["L4: CRO<br/>药物发现·临床前·临床<br/>药明康德/康龙化成/泰格医药"]
-    L5["L5: CDMO<br/>原料药·制剂·生物药<br/>药明生物/凯莱英/博腾股份"]
-    L6["L6: 创新药企<br/>靶点开发·临床推进<br/>百济神州/信达生物/康方生物"]
-    L7["L7: 商业化<br/>BD出海·医保准入<br/>百利天恒/科伦博泰"]
-    L1 --> L4
-    L2 --> L4
-    L3 --> L4
-    L3 --> L5
-    L4 --> L5
-    L4 --> L6
-    L5 --> L6
-    L6 --> L7
-    style L1 fill:#1a1d28,stroke:#d4a853,color:#e8e6e3
-    style L2 fill:#1a1d28,stroke:#d4a853,color:#e8e6e3
-    style L3 fill:#1a1d28,stroke:#5b8def,color:#e8e6e3
-    style L4 fill:#1a1d28,stroke:#5b8def,color:#e8e6e3
-    style L5 fill:#1a1d28,stroke:#d4a853,color:#e8e6e3
-    style L6 fill:#1a1d28,stroke:#e0556a,color:#e8e6e3
-    style L7 fill:#1a1d28,stroke:#4caf88,color:#e8e6e3
+      <div class="layer-chain">
+        <div class="layer-item layer-gold">
+          <div class="layer-head">
+            <span class="layer-num">L1</span>
+            <span class="layer-name">核心原料</span>
+          </div>
+          <div class="layer-sub">培养基 · 填料 · 生物试剂</div>
+          <div class="layer-comp">义翘神州 / 百普赛斯 / 奥浦迈</div>
+        </div>
+        <div class="layer-arrow">↓</div>
+        <div class="layer-item layer-gold">
+          <div class="layer-head">
+            <span class="layer-num">L2</span>
+            <span class="layer-name">实验动物</span>
+          </div>
+          <div class="layer-sub">模式动物 · 基因编辑</div>
+          <div class="layer-comp">南模生物 / 药康生物</div>
+        </div>
+        <div class="layer-arrow">↓</div>
+        <div class="layer-item layer-blue">
+          <div class="layer-head">
+            <span class="layer-num">L3</span>
+            <span class="layer-name">仪器设备</span>
+          </div>
+          <div class="layer-sub">生物反应器 · 分析仪器</div>
+          <div class="layer-comp">东富龙 / 楚天科技</div>
+        </div>
+        <div class="layer-arrow">↓</div>
+        <div class="layer-item layer-blue">
+          <div class="layer-head">
+            <span class="layer-num">L4</span>
+            <span class="layer-name">CRO</span>
+          </div>
+          <div class="layer-sub">药物发现 · 临床前 · 临床</div>
+          <div class="layer-comp">药明康德 / 康龙化成 / 泰格医药</div>
+        </div>
+        <div class="layer-arrow">↓</div>
+        <div class="layer-item layer-gold">
+          <div class="layer-head">
+            <span class="layer-num">L5</span>
+            <span class="layer-name">CDMO</span>
+          </div>
+          <div class="layer-sub">原料药 · 制剂 · 生物药</div>
+          <div class="layer-comp">药明生物 / 凯莱英 / 博腾股份</div>
+        </div>
+        <div class="layer-arrow">↓</div>
+        <div class="layer-item layer-red">
+          <div class="layer-head">
+            <span class="layer-num">L6</span>
+            <span class="layer-name">创新药企</span>
+          </div>
+          <div class="layer-sub">靶点开发 · 临床推进</div>
+          <div class="layer-comp">百济神州 / 信达生物 / 康方生物</div>
+        </div>
+        <div class="layer-arrow">↓</div>
+        <div class="layer-item layer-green">
+          <div class="layer-head">
+            <span class="layer-num">L7</span>
+            <span class="layer-name">商业化</span>
+          </div>
+          <div class="layer-sub">BD出海 · 医保准入</div>
+          <div class="layer-comp">百利天恒 / 科伦博泰</div>
+        </div>
+        <div class="layer-legend">
+          <span class="legend-item"><i style="background:var(--accent)"></i>瓶颈重点</span>
+          <span class="legend-item"><i style="background:var(--accent2)"></i>重要支撑</span>
+          <span class="legend-item"><i style="background:var(--danger)"></i>需求端</span>
+          <span class="legend-item"><i style="background:var(--green)"></i>变现端</span>
+        </div>
       </div>
     </div>
 
